@@ -7,21 +7,22 @@ phases:
       - pip install awscli --upgrade
       - aws --version
       - $(aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION})
-      - REPOSITORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROJECT_NAMESPACE}
+      - REPOSITORY_NAME_PHP_FPM=${PROJECT_NAMESPACE}/php-fpm
+      - REPOSITORY_URI_PHP_FPM=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${REPOSITORY_NAME_PHP_FPM}
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t ${REPOSITORY_URI}/php-fpm:latest -f docker/php-fpm/Dockerfile .
-      - docker tag ${REPOSITORY_URI}/php-fpm:latest ${REPOSITORY_URI}/php-fpm:$IMAGE_TAG
+      - docker build -t ${REPOSITORY_URI_PHP_FPM}:latest -f docker/php-fpm/Dockerfile .
+      - docker tag ${REPOSITORY_URI_PHP_FPM}:latest ${REPOSITORY_URI_PHP_FPM}:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push ${REPOSITORY_URI}/php-fpm:latest
-      - docker push ${REPOSITORY_URI}/php-fpm:$IMAGE_TAG
+      - docker push ${REPOSITORY_URI_PHP_FPM}:latest
+      - docker push ${REPOSITORY_URI_PHP_FPM}:$IMAGE_TAG
       - echo Writing image definitions file...
-      - echo "[{\"name\":\"${IMAGE_NAME}\",\"imageUri\":\"${REPOSITORY_URI}/php-fpm:${IMAGE_TAG}\"}]" > imagedefinitions.json
+      - echo "[{\"name\":\"${REPOSITORY_NAME_PHP_FPM}\",\"imageUri\":\"${REPOSITORY_URI_PHP_FPM}:${IMAGE_TAG}\"}]" > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
