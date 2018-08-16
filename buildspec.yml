@@ -24,6 +24,6 @@ phases:
       - docker push ${REPOSITORY_URI_PHP_FPM}:latest
       - docker push ${REPOSITORY_URI_PHP_FPM}:$IMAGE_TAG
       - echo Writing image definitions file...
-      - echo "[{\"name\":\"${REPOSITORY_NAME_PHP_FPM}\",\"imageUri\":\"${REPOSITORY_URI_PHP_FPM}:${IMAGE_TAG}\"}]" > imagedefinitions.json
+      - echo "[{\"name\":\"php-fpm\",\"imageUri\":\"${REPOSITORY_URI_PHP_FPM}:${IMAGE_TAG}\"}]" > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
