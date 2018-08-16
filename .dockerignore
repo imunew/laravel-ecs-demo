@@ -1,0 +1,7 @@
+bootstrap/cache/*
+storage/app/public/*
+storage/framework/*/*
+storage/log/*
+vendor/*
+node_modules/*
+docker/*

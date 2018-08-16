@@ -10,3 +10,10 @@ services:
     build:
       context: .
       dockerfile: ./docker/php-fpm/Dockerfile
+  nodejs:
+    build:
+      context: .
+      dockerfile: ./docker/nodejs/Dockerfile
+    volumes:
+      - .:/build
+    working_dir: /build
