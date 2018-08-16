@@ -7,8 +7,8 @@ phases:
       - pip install awscli --upgrade
       - aws --version
       - $(aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION})
-      - REPOSITORY_NAME_PHP_FPM=${PROJECT_NAMESPACE}/php-fpm
-      - REPOSITORY_URI_PHP_FPM=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${REPOSITORY_NAME_PHP_FPM}
+      - IMAGE_NAME_PHP_FPM=php-fpm
+      - REPOSITORY_URI_PHP_FPM=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROJECT_NAMESPACE}/${IMAGE_NAME_PHP_FPM}
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
@@ -24,6 +24,6 @@ phases:
       - docker push ${REPOSITORY_URI_PHP_FPM}:latest
       - docker push ${REPOSITORY_URI_PHP_FPM}:$IMAGE_TAG
       - echo Writing image definitions file...
-      - echo "[{\"name\":\"php-fpm\",\"imageUri\":\"${REPOSITORY_URI_PHP_FPM}:${IMAGE_TAG}\"}]" > imagedefinitions.json
+      - echo "[{\"name\":\"${IMAGE_NAME_PHP_FPM}\",\"imageUri\":\"${REPOSITORY_URI_PHP_FPM}:${IMAGE_TAG}\"}]" > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
