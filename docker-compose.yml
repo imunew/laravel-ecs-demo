@@ -1,7 +1,9 @@
 version: '3.2'
 services:
   nginx:
-    build: ./docker/nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
     ports:
       - "80:80"
     depends_on:

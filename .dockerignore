@@ -4,4 +4,3 @@ storage/framework/*/*
 storage/log/*
 vendor/*
 node_modules/*
-docker/*
