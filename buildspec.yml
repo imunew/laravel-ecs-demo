@@ -21,7 +21,7 @@ phases:
       - docker run --rm -v $(pwd):/build -w /build nodejs npm install
       - docker run --rm -v $(pwd):/build -w /build nodejs npm run dev
       - docker build -t ${REPOSITORY_URI_PHP_FPM}:latest -f docker/php-fpm/Dockerfile .
-      - docker build -t ${REPOSITORY_URI_NGINX}:latest docker/nginx
+      - docker build -t ${REPOSITORY_URI_NGINX}:latest -f docker/nginx/Dockerfile .
       - docker tag ${REPOSITORY_URI_PHP_FPM}:latest ${REPOSITORY_URI_PHP_FPM}:$IMAGE_TAG
       - docker tag ${REPOSITORY_URI_NGINX}:latest ${REPOSITORY_URI_NGINX}:$IMAGE_TAG
   post_build:
