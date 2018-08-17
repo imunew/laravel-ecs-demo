@@ -61,47 +61,117 @@ $ docker push ${REPOSITORY_URI_NGINX}:$IMAGE_TAG
 
 ## Create Task definition
 
-| name | laravel-ecs-demo |
-| Launch type | EC2 |
+<table>
+  <tr>
+    <th align="left">name</th><td>laravel-ecs-demo</td>
+  </tr>
+  <tr>
+    <th align="left">Launch type</th><td>EC2</td>
+  </tr>
+</table>
 
 ### Add php-fpm container
 
-| name | php-fpm |
-| image (uri) | ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/php-fpm:latest | 
-| working directory | /app | 
-| memory | 300 | 
+<table>
+  <tr>
+    <th align="left">name</th><td>php-fpm</td>
+  </tr>
+  <tr>
+    <th align="left">image (uri)</th><td>${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/php-fpm:latest</td>
+  </tr>
+  <tr>
+    <th align="left">working directory</th><td>/app</td>
+  </tr>
+  <tr>
+    <th align="left">memory</th><td>300</td>
+  </tr>
+</table>
 
 ### Add nginx container
 
-| name | nginx |
-| image (uri) | ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/nginx:latest | 
-| port mapping | tcp 80:80 | 
-| memory | 300 | 
-| links | php-fpm | 
+<table>
+  <tr>
+    <th align="left">name</th><td>nginx</td>
+  </tr>
+  <tr>
+    <th align="left">image (uri)</th><td>${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/nginx:latest</td>
+  </tr>
+  <tr>
+    <th align="left">port mapping</th><td>tcp 80:80</td>
+  </tr>
+  <tr>
+    <th align="left">memory</th><td>300</td>
+  </tr>
+  <tr>
+    <th align="left">links</th><td>php-fpm</td>
+  </tr>
+</table>
 
 ## Create ECS Cluster
 
-| name | laravel-ecs-demo-cluster |
-| cluster compatibility | EC2 Linux + Networking | 
-| EC2 Instance type | t2.small |
-| Provisioning model | Spot |
-| Number of instances | 2 |
-| Maximum bid price (per instance/hour) | 10($) |
+<table>
+  <tr>
+    <th align="left">name</th><td>laravel-ecs-demo-cluster</td>
+  </tr>
+  <tr>
+    <th align="left">cluster compatibility</th><td>EC2 Linux + Networking</td>
+  </tr>
+  <tr>
+    <th align="left">EC2 Instance type</th><td>t2.small</td>
+  </tr>
+  <tr>
+    <th align="left">Provisioning model</th><td>Spot</td>
+  </tr>
+  <tr>
+    <th align="left">Number of instances</th><td>2</td>
+  </tr>
+  <tr>
+    <th align="left">Maximum bid price (per instance/hour)</th><td>10($)</td>
+  </tr>
+</table>
 
 ## Create ALB (Application load balancer)
 
-| Availability Zone | (Choose from VPC of ECS Cluster) |
-| Listeners | HTTP 80 |
-| Target instances | (Choose from Availability Zone) |
+<table>
+  <tr>
+    <th align="left">Availability Zone</th><td>(Choose from VPC of ECS Cluster)</td>
+  </tr>
+  <tr>
+    <th align="left">Listeners</th><td>HTTP 80</td>
+  </tr>
+  <tr>
+    <th align="left">Target instances</th><td>(Choose from Availability Zone)</td>
+  </tr>
+</table>
 
 ## Create Service in ECS Cluster
 
-| Launch type | EC2 |
-| Task definition | laravel-ecs-demo |
-| Cluster | laravel-ecs-demo-cluster |
-| Service name | laravel-ecs-demo |
-| Service type | REPLICA |
-| Load balancer type | `Application Load Balancer` |
-| Container to load balance | nginx:80:80 |
-| Listener port | 80:HTTP |
-| Target Group | (Choose of ALB) |
+<table>
+  <tr>
+    <th align="left">Launch type</th><td>EC2</td>
+  </tr>
+  <tr>
+    <th align="left">Task definition</th><td>laravel-ecs-demo</td>
+  </tr>
+  <tr>
+    <th align="left">Cluster</th><td>laravel-ecs-demo-cluster</td>
+  </tr>
+  <tr>
+    <th align="left">Service name</th><td>laravel-ecs-demo</td>
+  </tr>
+  <tr>
+    <th align="left">Service type</th><td>REPLICA</td>
+  </tr>
+  <tr>
+    <th align="left">Load balancer type</th><td>Application Load Balancer</td>
+  </tr>
+  <tr>
+    <th align="left">Container to load balance</th><td>nginx:80:80</td>
+  </tr>
+  <tr>
+    <th align="left">Listener port</th><td>80:HTTP</td>
+  </tr>
+  <tr>
+    <th align="left">Target Group</th><td>(Choose of ALB)</td>
+  </tr>
+</table>
