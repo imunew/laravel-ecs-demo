@@ -18,7 +18,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t nodejs -f docker/nodejs/Dockerfile .
-      - docker run --rm -v $(pwd):/build -w /build nodejs npm install
+      - docker run --rm -v $(pwd):/build -w /build nodejs npm install && npm run dev
       - docker build -t ${REPOSITORY_URI_PHP_FPM}:latest -f docker/php-fpm/Dockerfile .
       - docker build -t ${REPOSITORY_URI_NGINX}:latest docker/nginx
       - docker tag ${REPOSITORY_URI_PHP_FPM}:latest ${REPOSITORY_URI_PHP_FPM}:$IMAGE_TAG

@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 .env
 /*.iml
+/public/css/app.css
+/public/js/app.js
